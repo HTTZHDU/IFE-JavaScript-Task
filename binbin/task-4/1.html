@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style type="text/css">
+#main {
+    width: 70%;
+    height: 100px;
+    position: absolute;
+    top: 150px;
+    left: 400px;
+}
+
+#box {
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+    display: inline-block;
+    /*float: left;*/
+    background: #f00;
+    text-align: center;
+    line-height: 30px;
+}
+</style>
+
+<body>
+    <div id="main">
+        <input type="text" value="" id="input">
+        <button id="left-in" onclick="LeftIn()">左侧入</button>
+        <button id="right-in" onclick="RightIn()">右侧入</button>
+        <button id="left-out" onclick="LeftOut()">左侧出</button>
+        <button id="right-out" onclick="RightOut()">右侧出</button>
+        <div id="queue">
+            <div id="box">10</div>
+            <div id="box">3</div>
+            <div id="box">30</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    // var text = document.getElementsByTagName("input").value;
+    var data = new Array();
+    //左侧进入队列
+    function LeftIn() {
+        var text = document.getElementById("input").value;
+        var node1 = document.getElementById("queue").firstChild;
+        var node = document.createElement("div");
+        node.id = "box";
+        node.innerHTML = text;
+        document.getElementById("queue").insertBefore(node, node1);
+    }
+    // 右侧进入队列
+    function RightIn() {
+        var text = document.getElementById("input").value;
+        var node = document.createElement("div");
+        node.id = "box";
+        node.innerHTML = text;
+        document.getElementById("queue").appendChild(node);
+    }
+    // 左侧出队列
+    function LeftOut() {
+        var node = document.getElementById("queue");
+        node.removeChild(node.childNodes[0]);
+    }
+    // 右侧出队列
+    function RightOut() {
+        var node = document.getElementById("queue");
+        var len = document.getElementById("queue").childNodes.length;
+        node.removeChild(node.childNodes[len - 1]);
+    }
+    </script>
+</body>
+
+</html>
