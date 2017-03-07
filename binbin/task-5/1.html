@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task-5</title>
+</head>
+<style type="text/css">
+#main {
+    width: 100%;
+    position: absolute;
+    top: 150px;
+    left: 400px;
+}
+
+#box {
+    width: 10px;
+    margin: 4px;
+    margin-top: 20px;
+    display: inline-block;
+    background: #f00;
+    line-height: 30px;
+}
+</style>
+
+<body>
+    <div id="main">
+        <h3>请输入数据</h3>
+        <input type="text" value="" id="input">
+        <button id="left-in" onclick="LeftIn()">左侧入</button>
+        <button id="right-in" onclick="RightIn()">右侧入</button>
+        <button id="left-out" onclick="LeftOut()">左侧出</button>
+        <button id="right-out" onclick="RightOut()">右侧出</button>
+        <button id="sort" onclick="Sort()">排序</button>
+        <div id="queue"></div>
+    </div>
+    <script type="text/javascript">
+    //左侧进入队列
+    function LeftIn() {
+        var num = document.getElementById("queue").getElementsByTagName("div").length;
+        var text = document.getElementById("input").value;
+        if (num < 60) {
+            if (text >= 10 && text <= 100) {
+                var node1 = document.getElementById("queue").firstChild;
+                var node = document.createElement("div");
+                node.id = "box";
+                node.style.height = text + "px";
+                document.getElementById("queue").insertBefore(node, node1);
+            } else {
+                alert("输入非法，请输入10-100之内的数字！");
+            }
+
+        } else {
+            alert("输入数量超过限制！");
+        }
+    }
+    // 右侧进入队列
+    function RightIn() {
+        var num = document.getElementById("queue").getElementsByTagName("div").length;
+        var text = document.getElementById("input").value;
+        //对当前数据的数量以及数据大小进行判断
+        if (num < 60) {
+            if (text >= 10 && text <= 100) {
+                //如果数据符合要求，创建节点并插入
+                var node = document.createElement("div");
+                node.id = "box";
+                node.style.height = text + "px"; //设置插入div的高度
+                document.getElementById("queue").appendChild(node); //插入节点
+            } else {
+                alert("输入非法，请输入10-100之内的数字！");
+            }
+
+        } else {
+            alert("输入数量超过限制！");
+        }
+
+    }
+    // 左侧出队列
+    function LeftOut() {
+        var node = document.getElementById("queue");
+        node.removeChild(node.childNodes[0]);
+    }
+    // 右侧出队列
+    function RightOut() {
+        var node = document.getElementById("queue");
+        var len = document.getElementById("queue").childNodes.length;
+        node.removeChild(node.childNodes[len - 1]);
+    }
+    // 排序
+    function Sort() {
+        var node = document.getElementById("queue");
+        var len = document.getElementById("queue").childNodes.length;
+        var data = new Array(len);
+        //判断当前节点下有没有子节点
+        if (node.hasChildNodes) {
+            for (n = 0; n < len; n++) {
+                //将获取的子节点的高度值存储到数组里
+                var num1 = node.childNodes[n].style.height.replace(/px/, "");
+                data[n] = num1;
+            }
+            //冒泡排序
+            for (var i = 0; i < len - 1; ++i) {
+                for (var j = 0; j < len - 1 - i; ++j) {
+                    if (data[j] > data[j + 1]) {
+                        var tmp = data[j];
+                        data[j] = data[j + 1];
+                        data[j + 1] = tmp;
+                    }
+
+                }
+            }
+            //将数组中的数据赋值给排序后的节点，作为高度值
+            for (var x = 0; x < len; x++) {
+                node.childNodes[x].style.height = data[x] + "px";
+            }
+        } else {
+            alert("尚无数据！请输入数据之后再进行排序~");
+        }
+    }
+    </script>
+</body>
+
+</html>
