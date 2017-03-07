@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task-6</title>
+</head>
+<style type="text/css">
+#main {
+    width: 70%;
+    height: 100px;
+    position: absolute;
+    top: 150px;
+    left: 400px;
+}
+
+.box {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+    display: inline-block;
+    /*float: left;*/
+    background: #f00;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+}
+</style>
+
+<body>
+    <div id="main">
+        <textarea id="input"></textarea>
+        <button id="left-in" onclick="LeftIn()">左侧入</button>
+        <button id="right-in" onclick="RightIn()">右侧入</button>
+        <button id="left-out" onclick="LeftOut()">左侧出</button>
+        <button id="right-out" onclick="RightOut()">右侧出</button>
+        <div id="queue">
+            <div class="box">10</div>
+            <div class="box">3</div>
+            <div class="box">30</div>
+        </div>
+        <input type="text" id="search" placeholder="请输入您要查询的内容">
+        <button id="ser-btn" onclick="Search()">查询</button>
+    </div>
+    <script type="text/javascript">
+    var data = new Array();
+
+    function addId() {
+        var len = document.getElementsByClassName("box").length;
+        for (i = 0; i < len; i++) {
+            document.getElementsByClassName("box")[i].id = 'box_' + i;
+        }
+    }
+
+    function LeftIn() {
+        var text = document.getElementById("input").value;
+        var node1 = document.getElementById("queue").firstChild;
+        var data1 = text.split(/\,|\，|\" "|\n|\s|\t/);
+
+        for (j = 0; j < data1.length; j++) {
+            var node = document.createElement("div");
+            node.className = "box";
+            node.innerHTML = data1[j];
+            document.getElementById("queue").insertBefore(node, node1);
+        }
+        addId();
+    }
+    // 右侧进入队列
+    function RightIn() {
+        var text = document.getElementById("input").value;
+        var data1 = text.split(/\,|\，|\" "|\n|\s|\t/);
+        var len = data1.length;
+        for (i = 0; i < len; i++) {
+            var node = document.createElement("div");
+            node.className = "box";
+            node.innerHTML = data1[i];
+            document.getElementById("queue").appendChild(node);
+        }
+        addId()
+    }
+    // 左侧出队列
+    function LeftOut() {
+        var node = document.getElementById("queue");
+        node.removeChild(node.childNodes[0]);
+    }
+    // 右侧出队列
+    function RightOut() {
+        var node = document.getElementById("queue");
+        var len = document.getElementById("queue").getElementsByTagName("div").length;
+        node.removeChild(node.childNodes[len - 1]);
+    }
+    //查询按钮
+    function Search() {
+        var len = document.getElementById("queue").getElementsByTagName("div");
+        for (i = 0; i < len.length; i++) {
+            var search = document.getElementById("search").value;
+            len[i].innerHTML = len[i].innerText.toString().replace(search, "<b style='color:#000'>" + search + "</b>");
+        }
+    }
+
+    </script>
+</body>
+
+</html>
