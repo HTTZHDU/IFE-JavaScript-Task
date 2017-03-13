@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task-9</title>
+</head>
+<style type="text/css">
+body {
+    height: 300px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background: #fff;
+    flex-flow: column;
+}
+
+#father-node {
+    border: 2px solid #000;
+    /*width: 1000px;*/
+    height: 180px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    -webkit-justify-content: center;
+    justify-content: center;
+    flex-flow: row;
+    background: #fff;
+}
+
+#node1 {
+    width: 300px;
+    margin: 10px;
+    border: 2px solid #000;
+    flex-flow: row;
+    display: -webkit-flex;
+    display: flex;
+    background: #fff;
+}
+
+#node2 {
+    width: 400px;
+    margin: 10px;
+    border: 2px solid #000;
+    flex-flow: row;
+    display: -webkit-flex;
+    display: flex;
+    background: #fff;
+}
+
+#node3 {
+    width: 100px;
+    margin: 10px;
+    border: 2px solid #000;
+    flex-flow: row;
+    display: -webkit-flex;
+    display: flex;
+    background: #fff;
+}
+
+.child1 {
+    width: 100px;
+    margin: 10px;
+    border: 2px solid #000;
+    flex-flow: row;
+    display: -webkit-flex;
+    display: flex;
+    background: #fff;
+}
+
+.child2 {
+    width: 260px;
+    margin: 10px;
+    border: 2px solid #000;
+    flex-flow: row;
+    display: -webkit-flex;
+    display: flex;
+    background: #fff;
+}
+
+.node {
+    width: 80px;
+    margin: 10px;
+    border: 2px solid #000;
+    background: #fff;
+}
+</style>
+
+<body>
+    <div id="father-node">javascript
+        <div id="node1">apple
+            <div class="child1">123
+                <div class="node">a</div>
+                <div class="node">b</div>
+            </div>
+            <div class="child1">banana
+                <div class="node">ha</div>
+            </div>
+        </div>
+        <div id="node2">
+            <div class="child1">school
+            </div>
+            <div class="child2">google
+                <div class="node">baidu</div>
+                <div class="node">net</div>
+                <div class="node">alibaba</div>
+            </div>
+        </div>
+        <div id="node3">hello</div>
+    </div>
+    <!--  <div class="btn"> -->
+    <button id="btn-1" onclick="PreOrder()">先序遍历</button>
+    <button id="btn-2" onclick="InOrder()">很奇怪的遍历</button>
+    <input type="text" id="input" placeholder="请输入要查询的内容">
+    <button id="search-btn" onclick="Search()">查询</button>
+    <!--   </div> -->
+</body>
+<script type="text/javascript">
+var node = document.getElementsByTagName("div");
+var root = document.getElementById("father-node");
+var data = root.innerText.replace(/\n/g, ",").split(",");
+
+function init() {
+    var node = document.getElementsByTagName("div");
+    for (i = 0; i < node.length; i++) {
+        node[i].style.background = "white";
+    }
+
+}
+function Search() {
+    var input = document.getElementById("input").value;
+    setInterval(Order, 1000);
+    var i = 0;
+
+    function Order() {
+        if (i < node.length) {
+            if (data[i] == input) {
+                node[i].style.background = "red";
+            } else {
+                node[i].style.background = "blue";
+            }
+        }
+        i++;
+    }
+    init();
+}
+// 先序遍历
+function PreOrder() {
+    var node = document.getElementsByTagName("div");
+
+    setInterval(Order, 1000);
+    var i = 0;
+
+    function Order() {
+
+        if (i < node.length) {
+            node[i].style.background = "red";
+
+        }
+        i++;
+    }
+    init();
+}
+// 需要修改
+function InOrder() {
+    var node = document.getElementById("father-node");
+    var arr = [];
+    var j = 0;
+    inOrder(node);
+
+    function inOrder(x) {
+        if (x.children.length) {
+            for (var i = 0; i < x.children.length; i++) {
+                inOrder(x.children[i]);
+            }
+        } else {
+            arr.push(x);
+            if(x.nextElementSibling){
+                arr.push(x.nextElementSibling);
+            }
+        }
+        arr.push(x.parentNode);
+    }
+    // console.log(arr);
+    console.log(arr);
+    setInterval(Order, 500);
+
+    function Order() {
+        if (j < arr.length-1) {
+            arr[j].style.background = "red";
+        }
+        j++;
+    }
+    init();
+}
+
+
+
+// 后序遍历
+
+function PostOrder() {
+    var node = document.getElementById("father-node");
+    var i = 0;
+    var arr = [];
+    inOrder(node);
+
+    function inOrder(x) {
+        if (x) {
+            inOrder(x.firstElementChild);
+            inOrder(x.lastElementChild);
+            arr.push(x);
+        }
+    }
+    setInterval(Order, 500);
+
+    function Order() {
+        if (i < arr.length) {
+            arr[i].style.background = "red";
+        }
+        i++;
+    }
+    init()
+
+}
+</script>
+
+</html>
