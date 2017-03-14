@@ -40,7 +40,7 @@ body {
     position: relative;
     top: 20px;
 }
-
+/*鼠标悬停产生模糊效果*/
 #bg:hover #main{
     -webkit-filter: blur(10px);
     /* Chrome, Opera */
@@ -49,7 +49,7 @@ body {
     filter: blur(10px);
     filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false);
 }
-
+/*文字流光渐变效果*/
 #word {
     position: absolute;
     width: 300px;
@@ -72,7 +72,7 @@ body {
         background-position: -100% 0;
     }
 }
-
+/*border产生*/
 a::before {
     content: '';
     position: absolute;
@@ -102,6 +102,7 @@ a::after {
     transition: all .8s;
     box-sizing: content-box;
 }
+
 #word:hover{
 	opacity: 1;
 }
