@@ -1,65 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Vue-bind</title>
+    <meta charset="UTF-8">
+    <title>Vue-bind</title>
 </head>
+
 <body>
-	
 </body>
 <script type="text/javascript">
-	function Observer(app1){
-		this.app1 = app1;
-		this.walk(app1)
-	}
-	let p = Observer.prototype;
-	p.walk = function (obj){
-		let val;
-		for(let key in obj){
-			if(obj.hasOwnProperty(key)){
-				val = obj[key];
-				if(typeof val === 'object'){
-					new Observer(val);
-				}
-				this.convert(key,val);
-			}
-		}
-	};
-	p.convert = function(key,val){
-		Object.defineProperty(this.app1,key,{
-			enumerable:true,
-			configurable:true,
-			// Writable:false,
-			get:function(){
-				console.log('你访问了'+key);
-				return val
-			},
-			set:function(newVal){
-				console.log('你设置了'+key);
-				console.log('新的'+key+'='+newVal)
-				if(newVal === val)return;
-				val = newVal
-			}
-		})
-	};
-	let app1 = {
-		data:{
-			name:"lsf",
-			age:"24"
-		},
-		address:{
-			city:"beijing"
-		}
-	};
-	let app2 = {
-		data:{
-			name:"lili",
-			age:"23"
-		},
-		address: {
-			city:"hangzhou"
-		}
-	};
-	// let app = new Observer(app1);
+function Observer(data) {
+    this.data = data;
+    this.walk(data)
+}
+let p = Observer.prototype;
+p.walk = function(obj) {
+    let val;
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            val = obj[key];
+            if (typeof val === 'object') {
+                new Observer(val);
+            }
+            this.convert(key, val);
+        }
+    }
+};
+p.convert = function(key, val) {
+    Object.defineProperty(this.data, key, {
+        enumerable: true,
+        configurable: true,
+        // Writable:false,
+        get: function() {
+            console.log('你访问了' + key);
+            return val
+        },
+        set: function(newVal) {
+            console.log('你设置了' + key);
+            console.log('新的' + key + '=' + newVal)
+            if (newVal === val) return;
+            val = newVal
+        }
+    })
+};
+let app1 = new Observer({
+    name: "lsf",
+    age: "24",
+    city: "beijing"
+});
+let app2 = new Observer({
+    university: 'bupt',
+    major: 'computer'
+});
+// let app = new Observer(app1);
 </script>
+
 </html>
